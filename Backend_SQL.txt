@@ -1,0 +1,113 @@
+
+-- CREATION OF ALL TABLES IN THE SCHEMA
+CREATE TABLE Accounts_Table
+  (
+    Bill_No VARCHAR2 (20) NOT NULL ,
+    Item_Cost FLOAT (15) NOT NULL ,
+    Duties FLOAT (15) NOT NULL ,
+    Taxes FLOAT (15) NOT NULL ,
+    Total_Cost FLOAT (15) NOT NULL
+  );
+
+  ALTER TABLE Accounts_Table ADD CONSTRAINT Accounts_Table_PK PRIMARY KEY ( Bill_No ) ;
+
+  CREATE TABLE Category_Table
+  (
+    Category_ID VARCHAR2 (20) NOT NULL ,
+    Category    VARCHAR2 (20) NOT NULL
+  );
+
+ALTER TABLE Category_Table ADD CONSTRAINT Category_Table_PK PRIMARY KEY ( Category_ID ) ;
+
+
+CREATE TABLE Companies
+  (
+    Company_ID   VARCHAR2 (20) NOT NULL ,
+    Company_Name VARCHAR2 (100) NOT NULL
+  ) ;
+ALTER TABLE Companies ADD CONSTRAINT Companies_PK PRIMARY KEY ( Company_ID ) ;
+
+
+CREATE TABLE Countries
+  (
+    Country_ID   VARCHAR2 (20) NOT NULL ,
+    Country_Name VARCHAR2 (100) NOT NULL
+  ) ;
+ALTER TABLE Countries ADD CONSTRAINT Countries_PK PRIMARY KEY ( Country_ID ) ;
+
+
+CREATE TABLE Goods_Table
+  (
+    Good_ID          VARCHAR2 (20) NOT NULL ,
+    Good_Name        VARCHAR2 (50) NOT NULL ,
+    Good_Description VARCHAR2 (100) ,
+    Job_Card_Job_ID  VARCHAR2 (20) NOT NULL
+  ) ;
+
+CREATE UNIQUE INDEX Goods_Table__IDX ON Goods_Table
+  (
+    Job_Card_Job_ID ASC
+  );
+
+ALTER TABLE Goods_Table ADD CONSTRAINT Goods_Table_PK PRIMARY KEY ( Good_ID ) ;
+
+
+CREATE TABLE Job_Card
+  (
+    Job_ID                     VARCHAR2 (20) NOT NULL ,
+    Bill_No                    VARCHAR2 (20) NOT NULL ,
+    Company_ID                 VARCHAR2 (20) NOT NULL ,
+    "Date"                     DATE NOT NULL ,
+    Category_ID                VARCHAR2 (20) NOT NULL ,
+    Status_ID                  VARCHAR2 (20) NOT NULL ,
+    Country_ID                 VARCHAR2 (20) NOT NULL ,
+    Good_ID                    VARCHAR2 (20) NOT NULL ,
+    Accounts_Table_Bill_No     VARCHAR2 (20) NOT NULL ,
+    Countries_Country_ID       VARCHAR2 (20) ,
+    Category_Table_Category_ID VARCHAR2 (20) ,
+    Companies_Company_ID       VARCHAR2 (20) NOT NULL
+  ) ;
+CREATE UNIQUE INDEX Job_Card__IDX ON Job_Card
+  (
+    Accounts_Table_Bill_No ASC
+  );
+
+ALTER TABLE Job_Card ADD CONSTRAINT Job_Card_PK PRIMARY KEY ( Job_ID ) ;
+
+
+CREATE TABLE Status_Table
+  (
+    Status_ID       VARCHAR2 (20) NOT NULL ,
+    Status          VARCHAR2 (20) NOT NULL ,
+    Payment_Status  VARCHAR2 (50) NOT NULL ,
+    Job_Card_Job_ID VARCHAR2 (20) NOT NULL
+  ) ;
+CREATE UNIQUE INDEX Status_Table__IDX ON Status_Table
+  (
+    Job_Card_Job_ID ASC
+  );
+
+ALTER TABLE Status_Table ADD CONSTRAINT Status_Table_PK PRIMARY KEY ( Status_ID ) ;
+
+SELECT * FROM tab;
+
+
+ALTER TABLE Goods_Table ADD CONSTRAINT Goods_Table_Job_Card_FK FOREIGN KEY ( Job_Card_Job_ID ) REFERENCES Job_Card ( Job_ID );
+
+ALTER TABLE Job_Card ADD CONSTRAINT Job_Card_Accounts_Table_FK FOREIGN KEY ( Accounts_Table_Bill_No ) REFERENCES Accounts_Table ( Bill_No );
+
+ALTER TABLE Job_Card ADD CONSTRAINT Job_Card_Category_Table_FK FOREIGN KEY ( Category_Table_Category_ID ) REFERENCES Category_Table ( Category_ID );
+
+ALTER TABLE Job_Card ADD CONSTRAINT Job_Card_Companies_FK FOREIGN KEY ( Companies_Company_ID ) REFERENCES Companies ( Company_ID );
+
+ALTER TABLE Job_Card ADD CONSTRAINT Job_Card_Countries_FK FOREIGN KEY ( Countries_Country_ID ) REFERENCES Countries ( Country_ID );
+
+ALTER TABLE Status_Table ADD CONSTRAINT Status_Table_Job_Card_FK FOREIGN KEY ( Job_Card_Job_ID ) REFERENCES Job_Card ( Job_ID );
+
+
+
+--=================================================
+-- ALL TABLES GENERATED
+
+SELECT * FROM tab;
+
