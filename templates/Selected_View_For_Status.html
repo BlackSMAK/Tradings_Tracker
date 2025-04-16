@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter and Display</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            background-color: green;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ddd;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Filter and Display Data</h1>
+    <form method="POST" action="/Selected_View_For_Status">
+        <label for="display_option">Display Option:</label>
+        <select name="display_option" onchange="this.form.submit()">
+            <option value="status" {% if display_option == 'status' %}selected{% endif %}>Status Table</option>
+            <option value="accounts" {% if display_option == 'accounts' %}selected{% endif %}>Accounts Table</option>
+            <option value="join" {% if display_option == 'join' %}selected{% endif %}>Join Tables</option>
+        </select>
+    </form>
+    
+    <form method="POST" action="/Selected_View_For_Status">
+        <label for="filter1">Filter by:</label>
+        <select name="filter1_column">
+            <!-- Dynamically adjust columns based on display option -->
+            {% if display_option == "status" %}
+                <option value="Status_ID">Status_ID</option>
+                <option value="Status">Status</option>
+                <option value="Payment_Status">Payment_Status</option>
+                <option value="Bill_No">Bill_No</option>
+            {% elif display_option == "accounts" %}
+                <option value="Item_Cost">Item_Cost</option>
+                <option value="Duties">Duties</option>
+                <option value="Taxes">Taxes</option>
+                <option value="Total_Cost">Total_Cost</option>
+            {% elif display_option == "join" %}
+                <option value="Status_ID">Status_ID</option>
+                <option value="Status">Status</option>
+                <option value="Payment_Status">Payment_Status</option>
+                <option value="Bill_No">Bill_No</option>
+                <option value="Item_Cost">Item_Cost</option>
+                <option value="Duties">Duties</option>
+                <option value="Taxes">Taxes</option>
+                <option value="Total_Cost">Total_Cost</option>
+            {% endif %}
+        </select>
+        <input type="text" name="filter1_value" placeholder="Enter value">
+
+        <label for="filter2">Additional Filter (optional):</label>
+        <select name="filter2_column">
+            <!-- Same logic for dynamic filter dropdowns -->
+        </select>
+        <input type="text" name="filter2_value" placeholder="Enter value">
+        <br><br>
+        <button type="submit">Filter</button>
+        <button type="submit" name="display_all" value="true">Display All</button>
+    </form>
+    <a href="/"><button>Home</button></a>
+    
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    {% if rows %}
+        <table>
+            <thead>
+                <tr>
+                    {% for column in columns %}
+                        <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                    <tr>
+                        {% for column in columns %}
+                            <td>{{ row[column] }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>

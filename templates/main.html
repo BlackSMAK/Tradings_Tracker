@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade Tracker - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Background -->
+        <div class="background">
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="text-section">
+                <h1>        </h1>
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-container">
+                <a href="/view/show" class="button">
+                    <img src="{{ url_for('static', filename='View Card.png') }}" alt="View Job Cards">
+                    
+                </a>
+                <a href="/add_account" class="button">
+                    <img src="{{ url_for('static', filename='Add Card.png') }}" alt="Add Job Cards">
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View_Cards_Selection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='View.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Background -->
+        <div class="background">
+        </div>
+    <!-- Background with header is already included in the image -->
+    <div class="content">
+        <div class="text-section">
+            <h1>Select the option you want to view</h1>
+        </div>
+        <div class="buttons">
+            <a href="/view/goods"><img src="{{ url_for('static', filename='View_Goods.png') }}" alt="Goods" class="button"></a>
+            <a href="/view/accounts"><img src="{{ url_for('static', filename='View_Accounts.png') }}" alt="Accounts" class="button"></a>
+            <a href="/view/category"><img src="{{ url_for('static', filename='View_Category.png') }}" alt="Category" class="button"></a>
+            <a href="/view/status"><img src="{{ url_for('static', filename='View_Status.png') }}" alt="Status" class="button"></a>
+            <a href="/view/country"><img src="{{ url_for('static', filename='View_Country.png') }}" alt="Country" class="button"></a>
+            <a href="/view/company"><img src="{{ url_for('static', filename='View_Company.png') }}" alt="Company" class="button"></a>
+        </div>
+    </div>
+</body>
+</html>
